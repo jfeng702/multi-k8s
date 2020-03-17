@@ -4,7 +4,7 @@
     "redis": "2.8.0"
   },
   "scripts": {
-    "scripts": "node index.js",
+    "start": "node index.js",
     "dev": "nodemon"
   }
 }
