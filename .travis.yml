@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jf971m/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true jf971m/react-test npm test
+
+after_success:
+  - docker build -t jf971m/multi-client ./client
+  - docker build -t jf971m/multi-nginx ./nginx
+  - docker build -t jf971m/multi-server ./server
+  - docker build -t jf971m/multi-worker ./worker
+  # log in to docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push to docker hub
+  - docker push jf971m/multi-client
+  - docker push jf971m/multi-nginx
+  - docker push jf971m/multi-server
+  - docker push jf971m/multi-worker
