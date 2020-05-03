@@ -1,5 +1,5 @@
-const keys = require("./keys");
-const redis = require("redis");
+const keys = require('./keys');
+const redis = require('redis');
 
 const redisClient = redis.createClient({
   host: keys.redisHost,
@@ -14,6 +14,6 @@ function fib(index) {
 }
 
 sub.on('message', (channel, message) => {
-  redisClient.hset('values', message, fib(parseInt(message)))
-})
-sub.subscribe('insert')
+  redisClient.hset('values', message, fib(parseInt(message)));
+});
+sub.subscribe('insert');
